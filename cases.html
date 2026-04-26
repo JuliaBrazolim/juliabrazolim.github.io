@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfólio — Julia Brazolim</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --black: #0d0d0d;
+    --white: #ffffff;
+    --pink: #e040b5;
+    --gray: #f4f4f4;
+    --gray2: #eeeeee;
+    --text-dim: rgba(13,13,13,0.5);
+  }
+
+  body { background: var(--white); color: var(--black); font-family: 'Helvetica Neue', Arial, sans-serif; overflow-x: hidden; }
+  a { color: inherit; text-decoration: none; }
+
+  /* NAV */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 48px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--white);
+    border-bottom: 1px solid #e8e8e8;
+  }
+
+  .nav-logo { font-size: 17px; font-weight: 600; }
+
+  .nav-links { display: flex; gap: 32px; list-style: none; font-size: 14px; }
+  .nav-links a { opacity: 0.55; transition: opacity 0.2s; color: var(--black); }
+  .nav-links a:hover, .nav-links a.active { opacity: 1; text-decoration: underline; text-underline-offset: 4px; }
+
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px;
+  }
+
+  .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--black); border-radius: 2px; }
+
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: var(--white);
+    z-index: 99;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 36px;
+  }
+
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { font-size: 28px; font-weight: 700; opacity: 0.75; color: var(--black); }
+  .mobile-menu a:hover { opacity: 1; }
+
+  .mobile-close {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    background: none;
+    border: none;
+    color: var(--black);
+    font-size: 32px;
+    line-height: 1;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+  }
+
+  .mobile-close:hover { opacity: 1; }
+
+  /* PAGE HEADER */
+  .page-header { padding: 52px 48px 28px; max-width: 1100px; margin: 0 auto; }
+  .page-header h1 { font-size: clamp(36px, 5vw, 52px); font-weight: 800; letter-spacing: -1.5px; }
+
+  /* LAYOUT */
+  .portfolio-layout { max-width: 1100px; margin: 0 auto; padding: 0 48px 80px; display: flex; flex-direction: column; }
+
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+
+  /* ARTICLE */
+  .article-row { margin-bottom: 16px; }
+
+  .article-card {
+    background: var(--gray);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  .article-card-image {
+    width: 260px;
+    flex-shrink: 0;
+    background: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #aaa;
+    min-height: 160px;
+  }
+
+  .article-card-body {
+    flex: 1;
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .article-tag { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; opacity: 0.45; margin-bottom: 8px; }
+
+  .article-card h2 { font-size: clamp(18px, 2.5vw, 26px); font-weight: 800; line-height: 1.2; letter-spacing: -0.5px; color: var(--black); }
+
+  .article-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  /* BUTTONS */
+  .btn {
+    padding: 9px 20px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1.5px solid var(--black);
+    display: inline-block;
+  }
+
+  .btn-outline { background: transparent; color: var(--black); }
+  .btn-outline:hover { background: var(--black); color: var(--white); }
+  .btn-filled { background: var(--black); color: var(--white); }
+  .btn-filled:hover { background: transparent; color: var(--black); }
+
+  /* PROJECT CARD */
+  .project-card {
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--gray);
+    cursor: pointer;
+    border: 1px solid #e4e4e4;
+  }
+
+  .thumb-placeholder {
+    width: 100%;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    letter-spacing: 2px;
+    opacity: 0.18;
+    text-transform: uppercase;
+    transition: transform 0.4s;
+  }
+
+  .project-card:hover .thumb-placeholder { transform: scale(1.04); }
+
+  .project-meta { padding: 14px 16px 18px; background: var(--white); border-top: 1px solid #e4e4e4; }
+  .project-meta .proj-name { font-size: 14px; font-weight: 600; margin-bottom: 3px; color: var(--black); }
+  .project-meta .proj-year { font-size: 12px; color: var(--text-dim); }
+
+  .c1{background:#5a4f7a}.c2{background:#2a3a5a}.c3{background:#4a6a5a}.c4{background:#6a4a3a}
+  .c5{background:#3a5a6a}.c6{background:#5a3a5a}.c7{background:#4a5a3a}.c8{background:#6a5a3a}
+  .c9{background:#3a3a6a}.c10{background:#6a3a4a}.c11{background:#3a6a4a}.c12{background:#5a6a3a}
+  .c13{background:#4a3a6a}.c14{background:#3a4a4a}.c15{background:#6a4a5a}.c16{background:#4a6a6a}
+
+  .row-4 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 16px; }
+
+  /* CTA */
+  .cta-section {
+    padding: 60px 48px 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1100px;
+    margin: 0 auto;
+    gap: 40px;
+    border-top: 1px solid #e8e8e8;
+  }
+
+  .cta-text h2 { font-size: clamp(28px, 4vw, 48px); font-weight: 800; letter-spacing: -1.5px; margin-bottom: 10px; }
+  .cta-text p { font-size: 15px; color: var(--text-dim); margin-bottom: 28px; }
+  .btn-group { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  .cta-illo { flex-shrink: 0; width: 150px; }
+  .cta-illo svg { width: 100%; height: auto; }
+
+  /* FOOTER */
+  footer { border-top: 1px solid #e8e8e8; padding: 24px 48px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; flex-wrap: wrap; gap: 16px; }
+  .footer-links { display: flex; gap: 24px; list-style: none; opacity: 0.5; flex-wrap: wrap; }
+  .footer-links a:hover { opacity: 1; }
+  .social-links { display: flex; gap: 14px; align-items: center; }
+  .social-links a { opacity: 0.5; transition: opacity 0.2s; display: flex; }
+  .social-links a:hover { opacity: 1; }
+
+  /* =====================
+     RESPONSIVE
+  ===================== */
+  @media (min-width: 320px) and (max-width: 740px) {
+    nav { padding: 18px 24px; }
+    .nav-links { display: none; }
+    .nav-toggle { display: flex; }
+
+    .page-header { padding: 36px 24px 20px; }
+
+    .portfolio-layout { padding: 0 24px 64px; }
+
+    /* grids viram 1 coluna */
+    .row { grid-template-columns: 1fr; }
+    .row-4 { grid-template-columns: 1fr; }
+
+    /* article: empilha verticalmente */
+    .article-card { flex-direction: column; }
+
+    .article-card-image {
+      width: 100%;
+      height: 180px;
+      min-height: unset;
+    }
+
+    .article-card-body { padding: 24px 20px; }
+
+    .cta-section {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 40px 24px 60px;
+      gap: 28px;
+    }
+
+    .cta-illo { align-self: flex-end; width: 110px; }
+
+    footer { flex-direction: column; align-items: flex-start; padding: 24px; gap: 20px; }
+    .footer-links { gap: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Julia Brazolim</div>
+  <ul class="nav-links">
+    <li><a href="#">Início</a></li>
+    <li><a href="#">Sobre mim</a></li>
+    <li><a href="#" class="active">Portfólio</a></li>
+    <li><a href="#">Artigos</a></li>
+    <li><a href="#">Contato</a></li>
+  </ul>
+  <button class="nav-toggle" onclick="document.getElementById('mobileMenu').classList.add('open')" aria-label="Abrir menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="document.getElementById('mobileMenu').classList.remove('open')">×</button>
+  <a href="#" onclick="document.getElementById('mobileMenu').classList.remove('open')">Início</a>
+  <a href="#" onclick="document.getElementById('mobileMenu').classList.remove('open')">Sobre mim</a>
+  <a href="#" onclick="document.getElementById('mobileMenu').classList.remove('open')">Portfólio</a>
+  <a href="#" onclick="document.getElementById('mobileMenu').classList.remove('open')">Artigos</a>
+  <a href="#" onclick="document.getElementById('mobileMenu').classList.remove('open')">Contato</a>
+</div>
+
+<div class="page-header"><h1>Portfolio</h1></div>
+
+<div class="portfolio-layout">
+
+  <div class="row">
+    <div class="project-card"><div class="thumb-placeholder c1">projeto</div><div class="project-meta"><div class="proj-name">Projeto Quero Chafé Shopify</div><div class="proj-year">2024</div></div></div>
+    <div class="project-card"><div class="thumb-placeholder c2">projeto</div><div class="project-meta"><div class="proj-name">Poster O Nascimento</div><div class="proj-year">2025</div></div></div>
+  </div>
+
+  <div class="row">
+    <div class="project-card"><div class="thumb-placeholder c3">projeto</div><div class="project-meta"><div class="proj-name">UI/UX para Aramis</div><div class="proj-year">2023 – atualmente</div></div></div>
+    <div class="project-card"><div class="thumb-placeholder c4">projeto</div><div class="project-meta"><div class="proj-name">UI/UX para Urban</div><div class="proj-year">2022 – atualmente</div></div></div>
+  </div>
+
+  <div class="row" style="margin-bottom:24px">
+    <div class="project-card"><div class="thumb-placeholder c5">projeto</div><div class="project-meta"><div class="proj-name">UI/UX para Visie</div><div class="proj-year">2024</div></div></div>
+    <div class="project-card"><div class="thumb-placeholder c6">projeto</div><div class="project-meta"><div class="proj-name">UI/UX para Cursos RME</div><div class="proj-year">2023</div></div></div>
+  </div>
+
+  <!-- ARTICLE 1 -->
+  <div class="article-row">
+    <div class="article-card">
+      <div class="article-card-image">imagem</div>
+      <div class="article-card-body">
+        <div><div class="article-tag">Artigo para Programaria</div><h2>5 dicas de UX para quem não é designer</h2></div>
+        <div class="article-actions">
+          <a href="#" class="btn btn-outline">Ler artigo</a>
+          <a href="#" class="btn btn-outline">Entre em contato</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="project-card"><div class="thumb-placeholder c7">projeto</div><div class="project-meta"><div class="proj-name">UX para Alper</div><div class="proj-year">2023–2024</div></div></div>
+    <div class="project-card"><div class="thumb-placeholder c8">projeto</div><div class="project-meta"><div class="proj-name">UX Insights para Vero</div><div class="proj-year">2024–2025</div></div></div>
+  </div>
+
+  <div class="row">
+    <div class="project-card"><div class="thumb-placeholder c9">projeto</div><div class="project-meta"><div class="proj-name">Apostilas Digitais Curso Coletiva</div><div class="proj-year">2019</div></div></div>
+    <div class="project-card"><div class="thumb-placeholder c10">projeto</div><div class="project-meta"><div class="proj-name">UI/UX para Aramis Way</div><div class="proj-year">2022 – atualmente</div></div></div>
+  </div>
+
+  <div class="row" style="margin-bottom:24px">
+    <div class="project-card"><div class="thumb-placeholder c11">projeto</div><div class="project-meta"><div class="proj-name">Fan Posters What We Do...</div><div class="proj-year">2023 – atualmente</div></div></div>
+    <div class="project-card"><div class="thumb-placeholder c12">projeto</div><div class="project-meta"><div class="proj-name">Capas para Direto de Marte</div><div class="proj-year">2023 – Atualmente</div></div></div>
+  </div>
+
+  <!-- ARTICLE 2 -->
+  <div class="article-row">
+    <div class="article-card">
+      <div class="article-card-image">imagem</div>
+      <div class="article-card-body">
+        <div><div class="article-tag">Artes e produção de podcast</div><h2>Projeto Veja o Doc</h2></div>
+        <div class="article-actions">
+          <a href="#" class="btn btn-outline">Ler artigo</a>
+          <a href="#" class="btn btn-outline">Entre em contato</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="project-card"><div class="thumb-placeholder c13">projeto</div><div class="project-meta"><div class="proj-name">UI/UX para Triton Alto Falantes</div><div class="proj-year">2021</div></div></div>
+    <div class="project-card"><div class="thumb-placeholder c14">projeto</div><div class="project-meta"><div class="proj-name">UX para Alpha-Bet</div><div class="proj-year">2023</div></div></div>
+  </div>
+
+  <div class="row" style="margin-bottom:24px">
+    <div class="project-card"><div class="thumb-placeholder c15">projeto</div><div class="project-meta"><div class="proj-name">Projeto Quiosque Livraria Zeta</div><div class="proj-year">2022</div></div></div>
+    <div class="project-card"><div class="thumb-placeholder c16">projeto</div><div class="project-meta"><div class="proj-name">UI/UX para Aramis Way</div><div class="proj-year">2022 – atualmente</div></div></div>
+  </div>
+
+  <!-- ARTICLE 3 -->
+  <div class="article-row" style="margin-bottom:24px">
+    <div class="article-card">
+      <div class="article-card-image">imagem</div>
+      <div class="article-card-body">
+        <div><div class="article-tag">Artigo para {Elas} programam_</div><h2>Criando coragem e publicando seus códigos</h2></div>
+        <div class="article-actions">
+          <a href="#" class="btn btn-outline">Ler artigo</a>
+          <a href="#" class="btn btn-outline">Entre em contato</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEV ROWS -->
+  <div class="row-4">
+    <div class="project-card"><div class="thumb-placeholder c1">dev</div><div class="project-meta"><div class="proj-name">Dev para Imzadi</div><div class="proj-year">2023 – atualmente</div></div></div>
+    <div class="project-card"><div class="thumb-placeholder c3">dev</div><div class="project-meta"><div class="proj-name">Dev para CoCreate Brasil</div><div class="proj-year">2022 – atualmente</div></div></div>
+  </div>
+  <div class="row-4">
+    <div class="project-card"><div class="thumb-placeholder c5">dev</div><div class="project-meta"><div class="proj-name">Dev para Advocacia Ihara</div><div class="proj-year">2023 – atualmente</div></div></div>
+    <div class="project-card"><div class="thumb-placeholder c7">dev</div><div class="project-meta"><div class="proj-name">Dev para Katia Oliveira</div><div class="proj-year">2022 – atualmente</div></div></div>
+  </div>
+  <div class="row-4">
+    <div class="project-card"><div class="thumb-placeholder c9">dev</div><div class="project-meta"><div class="proj-name">Dev para Viver Basquete</div><div class="proj-year">2023 – atualmente</div></div></div>
+    <div class="project-card"><div class="thumb-placeholder c11">dev</div><div class="project-meta"><div class="proj-name">Dev para Kapok</div><div class="proj-year">2022 – atualmente</div></div></div>
+  </div>
+  <div class="row-4" style="margin-bottom:0">
+    <div class="project-card"><div class="thumb-placeholder c13">dev</div><div class="project-meta"><div class="proj-name">Dev para Podcast Terapeuta</div><div class="proj-year">2023 – atualmente</div></div></div>
+    <div class="project-card"><div class="thumb-placeholder c15">dev</div><div class="project-meta"><div class="proj-name">Dev para Missão Exoplaneta</div><div class="proj-year">2022 – atualmente</div></div></div>
+  </div>
+
+</div>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-text">
+    <h2>gostou?</h2>
+    <p>bora conversar e fazer seu projeto virar realidade!</p>
+    <div class="btn-group">
+      <a href="#" class="btn btn-filled">quero!</a>
+      <a href="#" class="btn btn-outline">comece um projeto</a>
+    </div>
+  </div>
+  <div class="cta-illo">
+    <svg viewBox="0 0 180 220" fill="none">
+      <circle cx="90" cy="40" r="28" stroke="#0d0d0d" stroke-width="1.5" fill="none"/>
+      <path d="M75 15 Q85 0 95 12 Q105 -2 115 15" stroke="#0d0d0d" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <path d="M62 68 Q60 110 55 140 L125 140 Q120 110 118 68" stroke="#0d0d0d" stroke-width="1.5" fill="none"/>
+      <rect x="45" y="140" width="90" height="55" rx="4" stroke="#0d0d0d" stroke-width="1.5" fill="none"/>
+      <text x="65" y="170" fill="#0d0d0d" font-size="12" font-family="Arial" font-weight="bold">UAI?</text>
+      <path d="M68 140 L60 185 L75 185" stroke="#0d0d0d" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <path d="M112 140 L120 185 L105 185" stroke="#0d0d0d" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    </svg>
+  </div>
+</section>
+
+<footer>
+  <div class="nav-logo">Julia Brazolim</div>
+  <ul class="footer-links">
+    <li><a href="#">Sobre Mim</a></li><li><a href="#">Portfólio</a></li><li><a href="#">Artigos</a></li><li><a href="#">Contato</a></li>
+  </ul>
+  <div class="social-links">
+    <a href="#" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+    <a href="#" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></svg></a>
+    <a href="#" aria-label="X"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+  </div>
+</footer>
+</body>
+</html>

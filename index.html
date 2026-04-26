@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Julia Brazolim</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --black: #000;
+    --white: #f5f5f5;
+    --pink: #e040b5;
+    --gray: #1a1a1a;
+    --gray2: #2a2a2a;
+  }
+
+  body { background: var(--black); color: var(--white); font-family: 'Inter', sans-serif; overflow-x: hidden; }
+  a { color: inherit; text-decoration: none; }
+
+  header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 48px;
+  }
+
+  .nav-links-desktop {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+  }
+
+  /* Hamburguer */
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px;
+  }
+
+  .nav-toggle span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--white);
+    border-radius: 2px;
+  }
+
+  /* HERO */
+  .hero {
+    display: flex;
+    align-items: center;
+    gap: 64px;
+    padding: 80px 48px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .hero-illustration { flex-shrink: 0; width: 200px; }
+  .hero-illustration svg { width: 100%; height: auto; opacity: 0.9; }
+
+  .hero-text h1 {
+    font-size: clamp(30px, 4vw, 52px);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 18px;
+    letter-spacing: -1px;
+  }
+
+  .hero-text p {
+    font-size: 17px;
+    line-height: 1.65;
+    opacity: 0.85;
+    max-width: 520px;
+    margin-bottom: 32px;
+  }
+
+  .hero-text p span { color: var(--pink); font-weight: 600; }
+
+  .btn-group { display: flex; gap: 14px; flex-wrap: wrap; }
+
+  @media (min-width: 769px ) {
+    .h-mobile {
+      display: none;
+    }
+  }
+
+  @media (max-width: 768px) {
+    header {
+      display: flex;
+      flex-direction:row;
+      padding: 4px 16px;
+    }
+
+    .nav-links-desktop {
+     display: none;
+    }
+    .nav-toggle{
+      display: flex;
+    }
+
+    .h-mobile {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      top:0;
+      bottom:0;
+      left: 0px;
+      right: 0px;
+      background-color: #e040b5;
+      width: 100vw;
+      height:100vh;
+    }
+
+    .h-mobile.abertinho{
+      display: block; 
+    }
+
+    .nav-links-mobile {
+      display: flex;
+      list-style: none;
+      padding: 0%;
+      flex-direction: column;
+      align-items: center;
+     }
+  }
+
+</style>
+<body>
+
+<header>
+  <h1 class="nav-logo" title="Portfólio Julia Brazolim">Julia Brazolim</h1>
+  <ul class="nav-links-desktop">
+    <li><a href="#">Sobre mim</a></li>
+    <li><a href="#" class="active">Portfólio</a></li>
+    <li><a href="#">Artigos</a></li>
+    <li><a href="#">Contato</a></li>
+  </ul>
+  <button class="nav-toggle abridor" aria-label="Toggle navigation">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</header>
+
+<!-- Mobile Header -->
+  <div class="h-mobile">
+    <button class="nav-toggle fechador" aria-label="Toggle navigation">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+     <ul class="nav-links-mobile">
+      <li><a href="#">Sobre mim</a></li>
+      <li><a href="#" class="active">Portfólio</a></li>
+      <li><a href="#">Artigos</a></li>
+      <li><a href="#">Contato</a></li>
+    </ul>
+  </div>
+
+
+<div class="limit">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-illustration">
+      <img class="hero-illustration" src="img/eu-draw.png" alt="Ilustração de uma moça em forma de rabiscos de Julia Brazolim">
+    </div>
+    <div class="hero-text">
+      <h1>Oi oi oi, beleuzinha? <img src="img/espiral.svg"> </h1>
+      <p>Sou <span>UI e UX Designer</span>, front-end, podcaster, criadora e divulgadora científica da Missão Exoplaneta e... faço uns zines</p>
+      <div class="btn-group">
+        <a href="#" class="btn btn-filled">ver portifa</a>
+        <a href="#" class="btn btn-outline">comece um projeto</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS GRID -->
+  <section class="projects-grid carousel" style="padding: 32px 0; background-color: #fff;">
+    <figure class="project-card"> 
+      <img src="img/case-home1.png" alt="Projeto 01">
+      <a class="glass-btn" href="#">ver projeto</a>
+    </figure>
+    <figure class="project-card"> 
+      <img src="img/case-home2.png" alt="Projeto 02">
+      <a class="glass-btn" href="#">ver projeto</a>
+    </figure>
+    <figure class="project-card"> 
+      <img src="img/case-home2.png" alt="Projeto 03">
+      <a class="glass-btn" href="#">ver projeto</a>
+    </figure>
+    <figure class="project-card"> 
+      <img src="img/case-home2.png" alt="Projeto 04">
+      <a class="glass-btn" href="#">ver projeto</a>
+    </figure>
+    <figure class="project-card"> 
+      <img src="img/case-home2.png" alt="Projeto 05">
+      <a class="glass-btn" href="#">ver projeto</a>
+    </figure>
+    <figure class="project-card"> 
+      <img src="img/case-home2.png" alt="Projeto 06">
+      <a class="glass-btn" href="#">ver projeto</a>
+    </figure>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services">
+    <div class="service-card">
+      <div class="service-visual pink-bg">
+        <svg viewBox="0 0 300 200" fill="none"><path d="M40 160 Q80 40 140 100 Q180 140 220 60 Q240 20 270 80" stroke="white" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M20 140 Q60 60 120 120 Q170 160 210 80 Q240 30 280 100" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.5"/></svg>
+      </div>
+      <div class="service-info">
+        <h3>UI & UX Design</h3>
+        <p>Atuo desde a criação de um produto até seu lançamento, identificando problemas de usabilidade e encontrando soluções. Redesign estratégico também é comigo!</p>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-visual dark-bg">
+        <svg viewBox="0 0 300 200" fill="none">
+          <circle cx="150" cy="100" r="45" stroke="#e040b5" stroke-width="2" fill="none"/>
+          <ellipse cx="150" cy="100" rx="90" ry="28" stroke="#e040b5" stroke-width="1.5" fill="none"/>
+          <circle cx="50" cy="40" r="2" fill="#e040b5"/>
+          <circle cx="240" cy="60" r="1.5" fill="#e040b5"/>
+          <circle cx="80" cy="160" r="1" fill="#e040b5" opacity="0.6"/>
+          <circle cx="260" cy="140" r="2" fill="#e040b5" opacity="0.8"/>
+        </svg>
+      </div>
+      <div class="service-info">
+        <h3>Divulgação Científica</h3>
+        <p>Divulgo astronomia no projeto Missão Exoplaneta, que conta com newsletter e podcast onde entrevisto cientistas BR.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ZINES -->
+  <section class="zines-section">
+    <h2>Zines \o/</h2>
+    <div class="zines-grid">
+      <div class="zine-card"><div class="zine-ph c1">ZINE 01</div><span class="zine-btn">quero um</span></div>
+      <div class="zine-card"><div class="zine-ph c2">ZINE 02</div><span class="zine-btn">quero um</span></div>
+      <div class="zine-card"><div class="zine-ph c3">ZINE 03</div><span class="zine-btn">quero um</span></div>
+      <div class="zine-card"><div class="zine-ph c4">ZINE 04</div><span class="zine-btn">quero um</span></div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="cta-text">
+      <h2>quer design?</h2>
+      <p>conheça meu portifa e tudo que já produzi até agora</p>
+      <div class="btn-group">
+        <a href="#" class="btn btn-outline">ver portfólio</a>
+        <a href="#" class="btn btn-outline">comece um projeto</a>
+      </div>
+    </div>
+    <div class="cta-illustration">
+      <svg viewBox="0 0 180 220" fill="none">
+        <circle cx="90" cy="40" r="28" stroke="white" stroke-width="1.5" fill="none"/>
+        <path d="M75 15 Q85 0 95 12 Q105 -2 115 15" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path d="M62 68 Q60 110 55 140 L125 140 Q120 110 118 68" stroke="white" stroke-width="1.5" fill="none"/>
+        <rect x="45" y="140" width="90" height="55" rx="4" stroke="white" stroke-width="1.5" fill="none"/>
+        <rect x="48" y="143" width="84" height="42" rx="2" stroke="white" stroke-width="1" fill="none" opacity="0.5"/>
+        <text x="65" y="170" fill="white" font-size="12" font-family="Arial" font-weight="bold">UAI?</text>
+        <path d="M68 140 L60 185 L75 185" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path d="M112 140 L120 185 L105 185" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </section>
+</div>
+<footer>
+  <div class="nav-logo">Julia Brazolim</div>
+  <ul class="footer-links">
+    <li><a href="#">Sobre Mim</a></li>
+    <li><a href="#">Portfólio</a></li>
+    <li><a href="#">Artigos</a></li>
+    <li><a href="#">Contato</a></li>
+  </ul>
+  <div class="social-links">
+    <a href="#" aria-label="Instagram">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+    </a>
+    <a href="#" aria-label="LinkedIn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></svg>
+    </a>
+    <a href="#" aria-label="X">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+    </a>
+  </div>
+</footer>
+
+<script>
+  //abrir o menu
+  var abridorButton = document.querySelector('.abridor');
+  abridorButton.addEventListener('click', function(){
+    //Descobrir em quem devemos colocar a classe
+    var hmobile = document.querySelector('.h-mobile');
+
+    hmobile.classList.add('abertinho');
+
+     })
+
+  // fechar o menu
+  var fechadorButton = document.querySelector('.fechador');
+   fechadorButton.addEventListener('click', function() {
+    var hmobile = document.querySelector('.h-mobile');
+    hmobile.classList.remove('abertinho')
+
+    console.log(hmobile.classList)
+   })
+
+ 
+</script>
+
+</body>
+</html>

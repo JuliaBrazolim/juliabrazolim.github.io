@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quero Chafé — Julia Brazolim</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --black: #0d0d0d;
+    --white: #ffffff;
+    --pink: #e040b5;
+    --gray: #f4f4f4;
+    --gray2: #e8e8e8;
+    --text-dim: rgba(13,13,13,0.5);
+    --max: 760px;
+  }
+
+  body { background: var(--white); color: var(--black); font-family: 'Helvetica Neue', Arial, sans-serif; overflow-x: hidden; }
+  a { color: inherit; text-decoration: none; }
+
+  /* NAV */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 48px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--white);
+    border-bottom: 1px solid var(--gray2);
+  }
+
+  .nav-logo { font-size: 17px; font-weight: 600; }
+  .nav-links { display: flex; gap: 32px; list-style: none; font-size: 14px; }
+  .nav-links a { opacity: 0.55; transition: opacity 0.2s; }
+  .nav-links a:hover, .nav-links a.active { opacity: 1; text-decoration: underline; text-underline-offset: 4px; }
+
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px;
+  }
+
+  .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--black); border-radius: 2px; }
+
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: var(--white);
+    z-index: 99;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 36px;
+  }
+
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { font-size: 28px; font-weight: 700; opacity: 0.75; color: var(--black); }
+  .mobile-menu a:hover { opacity: 1; }
+
+  .mobile-close {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    background: none;
+    border: none;
+    color: var(--black);
+    font-size: 32px;
+    line-height: 1;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+  }
+
+  .mobile-close:hover { opacity: 1; }
+
+  /* HERO */
+  .case-hero { text-align: center; padding: 56px 48px 40px; border-bottom: 1px solid var(--gray2); }
+  .case-hero .overline { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 12px; }
+  .case-hero h1 { font-size: clamp(36px, 7vw, 72px); font-weight: 800; letter-spacing: -2px; line-height: 1.05; margin-bottom: 14px; }
+  .case-hero .subtitle { font-size: 14px; color: var(--text-dim); }
+
+  /* HERO IMAGE */
+  .hero-image { width: 100%; background: var(--gray); display: flex; align-items: center; justify-content: center; }
+  .hero-image .placeholder { width: 100%; height: 460px; display: flex; align-items: center; justify-content: center; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: #bbb; }
+
+  /* CONTENT */
+  .content { max-width: var(--max); margin: 0 auto; padding: 64px 24px; }
+
+  .intro h2 { font-size: clamp(22px, 3vw, 34px); font-weight: 800; letter-spacing: -0.8px; line-height: 1.2; margin-bottom: 22px; }
+  .intro p { font-size: 17px; line-height: 1.75; color: rgba(13,13,13,0.72); margin-bottom: 16px; }
+
+  .divider { border: none; border-top: 1px solid var(--gray2); margin: 52px 0; }
+
+  .section-title { font-size: 21px; font-weight: 800; letter-spacing: -0.4px; margin-bottom: 22px; }
+
+  /* TAGS */
+  .tags { display: flex; flex-wrap: wrap; gap: 10px; }
+  .tag { padding: 8px 18px; border-radius: 100px; border: 1.5px solid var(--black); font-size: 13px; font-weight: 500; }
+
+  /* HIGHLIGHTS */
+  .highlights { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+  .highlight-card { background: var(--gray); border-radius: 12px; padding: 22px 18px; }
+  .highlight-card .hl-icon { font-size: 20px; margin-bottom: 10px; }
+  .highlight-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+  .highlight-card p { font-size: 13px; line-height: 1.6; color: var(--text-dim); }
+
+  /* STEPS */
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 8px; }
+
+  .step-img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    background: var(--gray);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: #bbb;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    overflow: hidden;
+  }
+
+  .step-number { font-size: 13px; font-weight: 700; margin-bottom: 6px; color: var(--text-dim); }
+  .step-item h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .step-item p { font-size: 13px; line-height: 1.6; color: var(--text-dim); }
+
+  /* RESULTADO */
+  .resultado-text p { font-size: 17px; line-height: 1.75; color: rgba(13,13,13,0.72); margin-bottom: 16px; }
+
+  /* GALLERY */
+  .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 28px; }
+  .gallery-item { border-radius: 10px; overflow: hidden; background: var(--gray); }
+  .gallery-item.wide { grid-column: span 2; }
+  .gallery-item .img-ph { width: 100%; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #bbb; letter-spacing: 1px; text-transform: uppercase; }
+  .gallery-item.wide .img-ph { aspect-ratio: 21/9; }
+
+  /* BUTTONS */
+  .btn { padding: 11px 24px; border-radius: 100px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; border: 1.5px solid var(--black); display: inline-block; }
+  .btn-filled { background: var(--black); color: var(--white); }
+  .btn-filled:hover { background: transparent; color: var(--black); }
+  .btn-outline { background: transparent; color: var(--black); }
+  .btn-outline:hover { background: var(--black); color: var(--white); }
+  .btn-group { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  /* CTA */
+  .cta-section { padding: 56px 48px 72px; display: flex; align-items: center; justify-content: space-between; max-width: 1100px; margin: 0 auto; gap: 40px; border-top: 1px solid var(--gray2); }
+  .cta-text h2 { font-size: clamp(28px, 4vw, 48px); font-weight: 800; letter-spacing: -1.5px; margin-bottom: 10px; }
+  .cta-text p { font-size: 15px; color: var(--text-dim); margin-bottom: 26px; }
+  .cta-illo { flex-shrink: 0; width: 140px; }
+  .cta-illo svg { width: 100%; height: auto; }
+
+  /* FOOTER */
+  footer { border-top: 1px solid var(--gray2); padding: 24px 48px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; flex-wrap: wrap; gap: 16px; }
+  .footer-links { display: flex; gap: 24px; list-style: none; opacity: 0.5; flex-wrap: wrap; }
+  .footer-links a:hover { opacity: 1; }
+  .social-links { display: flex; gap: 14px; align-items: center; }
+  .social-links a { opacity: 0.5; transition: opacity 0.2s; display: flex; }
+  .social-links a:hover { opacity: 1; }
+
+  /* =====================
+     RESPONSIVE
+  ===================== */
+  @media (min-width: 320px) and (max-width: 740px) {
+    nav { padding: 18px 24px; }
+    .nav-links { display: none; }
+    .nav-toggle { display: flex; }
+
+    .case-hero { padding: 40px 24px 28px; }
+    .case-hero h1 { letter-spacing: -1px; }
+
+    .hero-image .placeholder { height: 240px; }
+
+    .content { padding: 44px 24px; }
+
+    .intro h2 { font-size: 22px; }
+    .intro p { font-size: 16px; }
+
+    /* highlights: 1 coluna */
+    .highlights { grid-template-columns: 1fr; gap: 12px; }
+
+    /* steps: 1 coluna */
+    .steps { grid-template-columns: 1fr; gap: 28px; }
+
+    /* gallery: 1 coluna */
+    .gallery { grid-template-columns: 1fr; }
+    .gallery-item.wide { grid-column: span 1; }
+    .gallery-item .img-ph { aspect-ratio: 16/9; }
+    .gallery-item.wide .img-ph { aspect-ratio: 16/9; }
+
+    .cta-section { flex-direction: column; align-items: flex-start; padding: 40px 24px 56px; gap: 28px; }
+    .cta-illo { align-self: flex-end; width: 110px; }
+
+    footer { flex-direction: column; align-items: flex-start; padding: 24px; gap: 20px; }
+    .footer-links { gap: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Julia Brazolim</div>
+  <ul class="nav-links">
+    <li><a href="#">Início</a></li>
+    <li><a href="#">Sobre mim</a></li>
+    <li><a href="#" class="active">Portfólio</a></li>
+    <li><a href="#">Artigos</a></li>
+    <li><a href="#">Contato</a></li>
+  </ul>
+  <button class="nav-toggle" onclick="document.getElementById('mobileMenu').classList.add('open')" aria-label="Abrir menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="document.getElementById('mobileMenu').classList.remove('open')">×</button>
+  <a href="#" onclick="document.getElementById('mobileMenu').classList.remove('open')">Início</a>
+  <a href="#" onclick="document.getElementById('mobileMenu').classList.remove('open')">Sobre mim</a>
+  <a href="#" onclick="document.getElementById('mobileMenu').classList.remove('open')">Portfólio</a>
+  <a href="#" onclick="document.getElementById('mobileMenu').classList.remove('open')">Artigos</a>
+  <a href="#" onclick="document.getElementById('mobileMenu').classList.remove('open')">Contato</a>
+</div>
+
+<div class="case-hero">
+  <p class="overline">Product Designer</p>
+  <h1>Quero Chafé</h1>
+  <p class="subtitle">Caso de Estudo &amp; Template de e-commerce, para Visie Padrões Web · 2023</p>
+</div>
+
+<div class="hero-image">
+  <div class="placeholder">imagem de capa do projeto</div>
+</div>
+
+<div class="content">
+
+  <section class="intro">
+    <h2>Nem chá, nem café = Quero Chafé!</h2>
+    <p>Neste divertido projeto, desenvolvi um produto fictício para estudo e como exemplo de cadastro de tema em uma loja virtual na plataforma Shopify. Meus layouts e imagens do produto foram fundamentais para guiar os desenvolvedores da Visie na criação de um tema personalizável.</p>
+    <p>Para essa marca imaginária, elaborei sabores criativos, defini fontes, criei um logotipo, desenhei embalagens e banners, uma tagline e toda sua identidade visual. Além disso, ajudei a projetar o fluxo de compra, incluindo o carrinho (minicart), a página de categoria e a página de produto.</p>
+  </section>
+
+  <hr class="divider">
+
+  <section>
+    <p class="section-title">O que fiz?</p>
+    <div class="tags">
+      <span class="tag">Design de Embalagem</span>
+      <span class="tag">Design de marca</span>
+      <span class="tag">Visual Design</span>
+      <span class="tag">UX Research</span>
+      <span class="tag">User Flows</span>
+      <span class="tag">Protótipo de média fidelidade</span>
+      <span class="tag">Motion Design</span>
+      <span class="tag">Copywriting</span>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <section>
+    <p class="section-title">Por que <em>Quero Chafé?</em></p>
+    <div class="highlights">
+      <div class="highlight-card">
+        <div class="hl-icon">☕</div>
+        <h4>É gostoso</h4>
+        <p>Designers e devs possuem algo em comum: um café ou chá sempre nos acompanha durante o trampo. Por isso, unimos o útil e o agradável para criar uma marca fictícia.</p>
+      </div>
+      <div class="highlight-card">
+        <div class="hl-icon">✨</div>
+        <h4>É fictício</h4>
+        <p>Inventei sabores de chás e de cafés para a criação de embalagens que seriam cadastradas pelos devs como produtos de exemplo.</p>
+      </div>
+      <div class="highlight-card">
+        <div class="hl-icon">🛒</div>
+        <h4>É um tema Shopify</h4>
+        <p>Os layouts serviram de direcionamento para programar um tema customizável, para que clientes imaginassem como ficaria sua marca.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <section>
+    <p class="section-title">Criação da logomarca</p>
+    <div class="steps">
+      <div class="step-item">
+        <div class="step-img">imagem</div>
+        <p class="step-number">1.</p>
+        <h4>Veio de um meme...</h4>
+        <p>"Quero caféééé", lembra? Abstraí a necessidade de uma pausa pra um café ou um chá para a criação de uma marca fictícia e divertida.</p>
+      </div>
+      <div class="step-item">
+        <div class="step-img">imagem</div>
+        <p class="step-number">2.</p>
+        <h4>Unindo dois mundos</h4>
+        <p>O tempo foi curto, então usei de base um print da origem do meme e desenhei por cima utilizando uma mesa digital para iniciar a criação do logotipo.</p>
+      </div>
+      <div class="step-item">
+        <div class="step-img">imagem</div>
+        <p class="step-number">3.</p>
+        <h4>Aplicação e finalização</h4>
+        <p>A logotipo possui aplicação em fundos claros e escuros, é vetorizada e durante a criação do design de embalagens, criei uma regra para seu uso.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <section>
+    <p class="section-title">Resultado</p>
+    <div class="resultado-text">
+      <p>Neste divertido projeto, criei um produto fictício de estudo e para servir de exemplo de cadastro em loja virtual para a plataforma Shopify. Meus layouts e imagens do produto serviram de direcionamento para desenvolvedores da Visie programarem um tema customizável para a plataforma.</p>
+      <p>Para o projeto dessa marca fantasia, criei sabores fictícios, definição de fontes, logo, embalagens, tagline e toda a identidade visual. Além da brand, foi desenhado todo o fluxo de compra de uma loja virtual incluindo carrinho (minicart), página de categoria e página de produto.</p>
+    </div>
+    <div class="gallery">
+      <div class="gallery-item wide"><div class="img-ph">imagem destaque</div></div>
+      <div class="gallery-item"><div class="img-ph">imagem</div></div>
+      <div class="gallery-item"><div class="img-ph">imagem</div></div>
+      <div class="gallery-item"><div class="img-ph">imagem</div></div>
+      <div class="gallery-item"><div class="img-ph">imagem</div></div>
+    </div>
+  </section>
+
+</div>
+
+<section class="cta-section">
+  <div class="cta-text">
+    <h2>gostou?</h2>
+    <p>bora conversar e fazer seu projeto virar realidade!</p>
+    <div class="btn-group">
+      <a href="#" class="btn btn-filled">quero!</a>
+      <a href="#" class="btn btn-outline">comece um projeto</a>
+    </div>
+  </div>
+  <div class="cta-illo">
+    <svg viewBox="0 0 180 220" fill="none">
+      <circle cx="90" cy="40" r="28" stroke="#0d0d0d" stroke-width="1.5" fill="none"/>
+      <path d="M75 15 Q85 0 95 12 Q105 -2 115 15" stroke="#0d0d0d" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <path d="M62 68 Q60 110 55 140 L125 140 Q120 110 118 68" stroke="#0d0d0d" stroke-width="1.5" fill="none"/>
+      <rect x="45" y="140" width="90" height="55" rx="4" stroke="#0d0d0d" stroke-width="1.5" fill="none"/>
+      <rect x="48" y="143" width="84" height="42" rx="2" stroke="#0d0d0d" stroke-width="1" fill="none" opacity="0.4"/>
+      <text x="65" y="170" fill="#0d0d0d" font-size="12" font-family="Arial" font-weight="bold">UAI?</text>
+      <path d="M68 140 L60 185 L75 185" stroke="#0d0d0d" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <path d="M112 140 L120 185 L105 185" stroke="#0d0d0d" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    </svg>
+  </div>
+</section>
+
+<footer>
+  <div class="nav-logo">Julia Brazolim</div>
+  <ul class="footer-links">
+    <li><a href="#">Sobre Mim</a></li><li><a href="#">Portfólio</a></li><li><a href="#">Artigos</a></li><li><a href="#">Contato</a></li>
+  </ul>
+  <div class="social-links">
+    <a href="#" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+    <a href="#" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></svg></a>
+    <a href="#" aria-label="X"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+  </div>
+</footer>
+
+</body>
+</html>
