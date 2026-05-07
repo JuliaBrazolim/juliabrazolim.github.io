@@ -83,14 +83,32 @@
   .mobile-close:hover { opacity: 1; }
 
   /* HERO */
-  .case-hero { text-align: center; padding: 56px 48px 40px; border-bottom: 1px solid var(--gray2); }
+  .case-hero { text-align: center; padding: 56px 48px 8px;}
   .case-hero .overline { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 12px; }
   .case-hero h1 { font-size: clamp(36px, 7vw, 72px); font-weight: 800; letter-spacing: -2px; line-height: 1.05; margin-bottom: 14px; }
   .case-hero .subtitle { font-size: 14px; color: var(--text-dim); }
 
   /* HERO IMAGE */
-  .hero-image { width: 100%; background: var(--gray); display: flex; align-items: center; justify-content: center; }
-  .hero-image .placeholder { width: 100%; height: 460px; display: flex; align-items: center; justify-content: center; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: #bbb; }
+  .hero-image { 
+    width: 100%;
+    display: flex;
+    align-items: center; 
+    margin: 0 auto; 
+    padding: 16px 32px;
+    border-radius: 32px;
+    border-width: 8px;
+    border-color:var(--gray);
+
+  }
+  .hero-image .placeholder { 
+    width: 100%; 
+    height: 460px; 
+    background-image: url("img/case-chafé/capa.png");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+
+   }
 
   /* CONTENT */
   .content { max-width: var(--max); margin: 0 auto; padding: 64px 24px; }
@@ -118,20 +136,19 @@
   .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 8px; }
 
   .step-img {
-    width: 100%;
-    aspect-ratio: 4/3;
+    width: 200px;
+    height: 280px;
     background: var(--gray);
     border-radius: 10px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    font-size: 11px;
-    color: #bbb;
-    letter-spacing: 1px;
-    text-transform: uppercase;
     margin-bottom: 14px;
     overflow: hidden;
-  }
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    object-fit: cover;
+    }
 
   .step-number { font-size: 13px; font-weight: 700; margin-bottom: 6px; color: var(--text-dim); }
   .step-item h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
@@ -240,7 +257,7 @@
 </div>
 
 <div class="hero-image">
-  <div class="placeholder">imagem de capa do projeto</div>
+  <div class="placeholder"></div>
 </div>
 
 <div class="content">
@@ -296,7 +313,7 @@
     <p class="section-title">Criação da logomarca</p>
     <div class="steps">
       <div class="step-item">
-        <div class="step-img">imagem</div>
+        <div class="step-img"><img src="img/case-chafé/2.png"></div>
         <p class="step-number">1.</p>
         <h4>Veio de um meme...</h4>
         <p>"Quero caféééé", lembra? Abstraí a necessidade de uma pausa pra um café ou um chá para a criação de uma marca fictícia e divertida.</p>
