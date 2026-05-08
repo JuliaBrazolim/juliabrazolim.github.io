@@ -1,0 +1,10 @@
+baseURL = "https://juliabrazolim.github.io/"
+title = "Julia Brazolim"
+disableKinds = ["taxonomy", "term"]
+
+[languages.pt]
+  locale = "pt-BR"
+  weight = 1
+
+[params]
+  description = "Portfólio de Julia Brazolim — UI/UX Designer, podcaster e divulgadora científica."

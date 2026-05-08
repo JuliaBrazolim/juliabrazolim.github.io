@@ -1,0 +1,128 @@
+{{ define "head" }}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ .Site.Title }}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="{{ "home-extra.css" | relURL }}">
+<link rel="stylesheet" href="{{ "style.css" | relURL }}">
+{{ end }}
+
+{{ define "body" }}
+{{ partial "nav-home.html" . }}
+
+<div class="wrapper">
+  <!-- HERO -->
+  <section class="hero">
+    {{ partial "hero-svg.html" . }}
+    <div class="hero-text">
+      <h1>Oi oi oi, beleuzinha? <img src="{{ "img/espiral.svg" | relURL }}"> </h1>
+      <p>Sou <span>UI e UX Designer</span>, ex-front-end, podcaster, divulgadora científica da Missão Exoplaneta e... faço uns zines por aí!</p>
+      <div class="btn-group">
+        <a href="/cases/" class="btn btn-filled">ver portfólio</a>
+        <a href="#" class="btn btn-outline">contato</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS GRID -->
+  <section class="projects-grid carousel" style="padding: 32px 0; background-color: #fff;">
+    {{ range where .Site.RegularPages "Section" "cases" }}
+    <figure class="project-card">
+      {{ if .Params.cover }}<img src="{{ .Params.cover | relURL }}" alt="{{ .Title }}">{{ end }}
+      <a class="glass-btn" href="{{ .RelPermalink }}">ver projeto</a>
+    </figure>
+    {{ else }}
+    <figure class="project-card">
+      <img src="{{ "img/case-home1.png" | relURL }}" alt="Projeto 01">
+      <a class="glass-btn" href="#">ver projeto</a>
+    </figure>
+    <figure class="project-card">
+      <img src="{{ "img/case-home2.png" | relURL }}" alt="Projeto 02">
+      <a class="glass-btn" href="#">ver projeto</a>
+    </figure>
+    <figure class="project-card">
+      <img src="{{ "img/case-home3.png" | relURL }}" alt="Projeto 03">
+      <a class="glass-btn" href="/cases/chafe/">ver projeto</a>
+    </figure>
+    <figure class="project-card">
+      <img src="{{ "img/case-home2.png" | relURL }}" alt="Projeto 04">
+      <a class="glass-btn" href="#">ver projeto</a>
+    </figure>
+    <figure class="project-card">
+      <img src="{{ "img/case-home4.png" | relURL }}" alt="Projeto 05">
+      <a class="glass-btn" href="#">ver projeto</a>
+    </figure>
+    <figure class="project-card">
+      <img src="{{ "img/case-home2.png" | relURL }}" alt="Projeto 06">
+      <a class="glass-btn" href="#">ver projeto</a>
+    </figure>
+    {{ end }}
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services">
+    <div class="service-card">
+      <div class="service-visual pink-bg">
+        <svg viewBox="0 0 300 200" fill="none"><path d="M40 160 Q80 40 140 100 Q180 140 220 60 Q240 20 270 80" stroke="white" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M20 140 Q60 60 120 120 Q170 160 210 80 Q240 30 280 100" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.5"/></svg>
+      </div>
+      <div class="service-info">
+        <h3>UI & UX Design</h3>
+        <p>Atuo desde a criação de um produto até seu lançamento, identificando problemas de usabilidade e encontrando soluções. Redesign estratégico também é comigo!</p>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-visual dark-bg">
+        <svg viewBox="0 0 300 200" fill="none">
+          <circle cx="150" cy="100" r="45" stroke="#e040b5" stroke-width="2" fill="none"/>
+          <ellipse cx="150" cy="100" rx="90" ry="28" stroke="#e040b5" stroke-width="1.5" fill="none"/>
+          <circle cx="50" cy="40" r="2" fill="#e040b5"/>
+          <circle cx="240" cy="60" r="1.5" fill="#e040b5"/>
+          <circle cx="80" cy="160" r="1" fill="#e040b5" opacity="0.6"/>
+          <circle cx="260" cy="140" r="2" fill="#e040b5" opacity="0.8"/>
+        </svg>
+      </div>
+      <div class="service-info">
+        <h3>Divulgação Científica</h3>
+        <p>Divulgo astronomia no projeto Missão Exoplaneta, que conta com newsletter e podcast onde entrevisto cientistas BR.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ZINES -->
+  <section class="zines-section">
+    <h2>Zines \o/</h2>
+    <div class="zines-grid">
+      <div class="zine-card"><div class="zine-ph c1">ZINE 01</div><span class="zine-btn">quero um</span></div>
+      <div class="zine-card"><div class="zine-ph c2">ZINE 02</div><span class="zine-btn">quero um</span></div>
+      <div class="zine-card"><div class="zine-ph c3">ZINE 03</div><span class="zine-btn">quero um</span></div>
+      <div class="zine-card"><div class="zine-ph c4">ZINE 04</div><span class="zine-btn">quero um</span></div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  {{ partial "cta-home.html" . }}
+</div>
+
+{{ partial "footer-home.html" . }}
+
+<script>
+  var abridorButton = document.querySelector('.abridor');
+  abridorButton.addEventListener('click', function(){
+    document.querySelector('.h-mobile').classList.add('abertinho');
+  });
+
+  var fechadorButton = document.querySelector('.fechador');
+  fechadorButton.addEventListener('click', function() {
+    document.querySelector('.h-mobile').classList.remove('abertinho');
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    setTimeout(() => {
+      const julinha_svg = document.querySelector('#euzinha');
+      julinha_svg.classList.add('active');
+    }, 100);
+  });
+</script>
+{{ end }}

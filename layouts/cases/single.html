@@ -1,0 +1,103 @@
+{{ define "head" }}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ .Title }} — {{ .Site.Title }}</title>
+<link rel="stylesheet" href="{{ "cases.css" | relURL }}">
+{{ end }}
+
+{{ define "body" }}
+{{ partial "nav-case.html" . }}
+
+<div class="case-hero">
+  <p class="overline">{{ .Params.overline | default "Product Designer" }}</p>
+  <h1>{{ .Title }}</h1>
+  <p class="subtitle">{{ .Params.subtitle }}</p>
+</div>
+
+{{ if .Params.cover }}
+<div class="hero-image">
+  <div class="placeholder" style="background-image: url('{{ .Params.cover | relURL }}');"></div>
+</div>
+{{ end }}
+
+<div class="content">
+
+  <section class="intro">
+    {{ .Content }}
+  </section>
+
+  {{ if .Params.tags }}
+  <hr class="divider">
+  <section>
+    <p class="section-title">O que fiz?</p>
+    <div class="tags">
+      {{ range .Params.tags }}
+      <span class="tag">{{ . }}</span>
+      {{ end }}
+    </div>
+  </section>
+  {{ end }}
+
+  {{ if .Params.highlights }}
+  <hr class="divider">
+  <section>
+    <p class="section-title">Por que <em>{{ .Title }}?</em></p>
+    <div class="highlights">
+      {{ range .Params.highlights }}
+      <div class="highlight-card">
+        <div class="hl-icon">{{ .icon }}</div>
+        <h4>{{ .title }}</h4>
+        <p>{{ .text }}</p>
+      </div>
+      {{ end }}
+    </div>
+  </section>
+  {{ end }}
+
+  {{ if .Params.steps }}
+  <hr class="divider">
+  <section>
+    <p class="section-title">{{ .Params.steps_title | default "Processo" }}</p>
+    <div class="steps">
+      {{ range .Params.steps }}
+      <div class="step-item">
+        <div class="step-img">{{ if .image }}<img src="{{ .image | relURL }}" alt="{{ .title }}">{{ end }}</div>
+        <p class="step-number">{{ .number }}</p>
+        <h4>{{ .title }}</h4>
+        <p>{{ .text }}</p>
+      </div>
+      {{ end }}
+    </div>
+  </section>
+  {{ end }}
+
+  {{ if .Params.result }}
+  <hr class="divider">
+  <section>
+    <p class="section-title">Resultado</p>
+    <div class="resultado-text">
+      {{ range .Params.result }}
+      <p>{{ . }}</p>
+      {{ end }}
+    </div>
+    {{ if .Params.gallery }}
+    <div class="gallery">
+      {{ range .Params.gallery }}
+      <div class="gallery-item{{ if .wide }} wide{{ end }}">
+        {{ if .image }}
+        <img src="{{ .image | relURL }}" alt="{{ .alt }}" style="width:100%; height:100%; object-fit:cover;">
+        {{ else }}
+        <div class="img-ph">{{ .label | default "imagem" }}</div>
+        {{ end }}
+      </div>
+      {{ end }}
+    </div>
+    {{ end }}
+  </section>
+  {{ end }}
+
+</div>
+
+{{ partial "cta-case.html" . }}
+{{ partial "footer-case.html" . }}
+{{ end }}

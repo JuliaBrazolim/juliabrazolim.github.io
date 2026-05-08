@@ -1,0 +1,38 @@
+{{ define "head" }}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfólio — {{ .Site.Title }}</title>
+<link rel="stylesheet" href="{{ "cases.css" | relURL }}">
+{{ end }}
+
+{{ define "body" }}
+{{ partial "nav-case.html" . }}
+
+<div class="portfolio-layout">
+  <div class="section-header">
+    <p class="section-tag">portfólio</p>
+    <h1 class="section-title">Todos os projetos</h1>
+  </div>
+
+  {{ range .Pages }}
+  <div class="project-group">
+    <h2 class="group-label">{{ .Title }}</h2>
+    <div class="project-grid">
+      <a class="project-card" href="{{ .RelPermalink }}">
+        {{ if .Params.cover }}
+        <div class="thumb-placeholder" style="background-image: url('{{ .Params.cover | relURL }}'); background-size: cover; background-position: center;"></div>
+        {{ else }}
+        <div class="thumb-placeholder c1">projeto</div>
+        {{ end }}
+        <div class="project-meta">
+          <div class="proj-name">{{ .Title }}</div>
+          <div class="proj-year">{{ .Params.year }}</div>
+        </div>
+      </a>
+    </div>
+  </div>
+  {{ end }}
+</div>
+
+{{ partial "footer-case.html" . }}
+{{ end }}
